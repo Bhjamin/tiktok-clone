@@ -7,7 +7,7 @@ import axios from "axios";
 const Viewbox = () => {
   const [videos, setVideos] = useState([]);
 
-  const key = process.env.REACT_APP_API_KEY;
+  const key = process.env.API_KEY;
 
   useEffect(() => {
     console.log(key);
