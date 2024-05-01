@@ -5,23 +5,27 @@ import Video from "./Video";
 import axios from "axios";
 
 const Viewbox = () => {
-  const [videos, setVideos] = useState([]);
+  const [videos, setVideos] = useState<Array<string>>([]);
 
-  const key = process.env.API_KEY;
+  const key = process.env.NEXT_PUBLIC_API_KEY;
 
   useEffect(() => {
-    console.log(key);
-  }, [key]);
+    fetchData();
+  }, []);
 
-  console.log(key);
-
-  // const fetchData = async () => {
-  //   await axios.get(`https://api.thecatapi.com/v1/images/search&api_key=${}`)
-  // }
+  const fetchData = async () => {
+    const response = await axios.get(
+      `https://api.thecatapi.com/v1/images/search?limit=3&api_key=${key}`
+    );
+    const urls = response.data.map((pic) => pic.url);
+    setVideos([...videos, ...urls]);
+  };
 
   return (
-    <div className="w-full h-full flex justify-center items-center">
-      <Video />
+    <div className="w-full flex flex-col justify-start items-center py-5 gap-5">
+      {videos.map((video) => {
+        return <Video />;
+      })}
     </div>
   );
 };
