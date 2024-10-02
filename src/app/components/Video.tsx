@@ -1,5 +1,5 @@
 "use client";
-import { useInView } from "framer-motion";
+import { useInView, useScroll, useMotionValueEvent } from "framer-motion";
 import { useRef, useEffect } from "react";
 
 const Video = ({
@@ -15,6 +15,11 @@ const Video = ({
 }) => {
   const ref = useRef<HTMLImageElement>(null);
   const isInView = useInView(ref, { margin: "-300px 0px -300px" });
+
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, "change", (scroll) => {
+    console.log(scroll);
+  });
 
   useEffect(() => {
     if (isInView) {
